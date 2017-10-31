@@ -1,2 +1,2 @@
-# Assignment-Getting-and-Cleaning-Dat
+# Getting and Cleaning Data
 Course Assignment
