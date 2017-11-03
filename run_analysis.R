@@ -1,11 +1,14 @@
 ##
 ## Download the data file
 ##
-        dataURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+        
+        ## Download the file if it is not in the working directory
         datasetFile_zipped <- paste0(getwd(),"/getdata%2Fprojectfiles%2FUCI HAR Dataset.zip")
         
         if (!file.exists(datasetFile_zipped)) {
+                dataURL <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
                 download.file(dataURL, destfile = datasetFile_zipped)
+                
                 fileAlreadyExists <- FALSE
         } else {
                 fileAlreadyExists <- TRUE
@@ -14,21 +17,16 @@
 ##
 ## Load needed libraries
 ##
-        require(readr)        
-        require(dplyr)        
-        require(data.table)
+        require(readr) # needed for: read_table2       
+        require(dplyr)     # needed for: bind_rows   
+        require(data.table)# needed for: data.table, setkeyv
         
 ##
 ## Read the data from the zipped file
 ##
         ## Read features from UCI HAR Dataset/features.txt
         features_file <- unzip (datasetFile_zipped,"UCI HAR Dataset/features.txt")
-        
-        ## I used read_table2 to import two columns separated by a space: Feature column id and Feature name
         features <- read_table2(features_file,col_names = FALSE)
-        
-        ## select all features that have the string -mean( or -std( in their names
-        features_selected <-grep("-mean\\(|-std\\(",features$X2)
         
         ## Read activities from UCI HAR Dataset/activity_labels.txt
         activity_labels_file <- unzip (datasetFile_zipped,"UCI HAR Dataset/activity_labels.txt")
@@ -85,8 +83,10 @@
         names(training_labels)<- "id"
 
 ##        
-## Extract from the variable columns only those that fit the selection criteria (i.e features_selected columns)
+## Extract from the variable columns only those that have the string -mean( or -std( in their names
 ##
+        ## select all features that have the string -mean( or -std( in their names
+        features_selected <- grep("-mean\\(|-std\\(",features$X2)
         test_set_selected <- test_set[,names(test_set) %in% features$X2[features_selected]]
         training_set_selected <- training_set[,names(training_set) %in% features$X2[features_selected]]
 
