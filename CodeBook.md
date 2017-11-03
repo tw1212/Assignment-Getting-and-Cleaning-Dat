@@ -21,23 +21,27 @@ I also changed the column names in test and training labels to "id".
 Data sets:
 This applies to both test and train set but I will only describe what I did to the test set.
 
-1- I added all the features as column names then I selected only those columns that are in features_selected (only mean and standard deviation columns).
-2- I replaced all ids in the test_labels with activity names from activity_labels by matching the ids
-3- I added test_labels in front of the test set
-4- I added the subject column in front of the activity column
-5- I merged both test and training sets into data_set_all
+<ol>
+<li>I added all the features as column names then I selected only those columns that are in features_selected (only mean and standard deviation columns)</li>
+<li>I replaced all ids in the test_labels with activity names from activity_labels by matching the ids</li>
+<li>I added test_labels in front of the test set</li>
+<li>I added the subject column in front of the activity column</li>
+<li>I merged both test and training sets into data_set_all</li>
+</ol>
 
 Better names for variables
 I tried to improve the variable names by:
-1- replacing the letter t at the start of the name with Time
-2- replacing the letter f at the start of the name with Frequency
-3- removing dashes and parentheses
-4- replacing Acc with Accelerometer
-5- replacing Gyro with Gyroscope
-6- replacing Mag with Magnitude
-7- replacing the string BodyBody with Body (I noticed that a few names had the word Body repeating)
-8- replacing the string mean with Mean
-9 -replacing the string std with StandardDeviation
+<ol>
+<li>replacing the letter t at the start of the name with Time</li>
+<li>replacing the letter f at the start of the name with Frequency</li>
+<li>removing dashes and parentheses</li>
+<li>replacing Acc with Accelerometer</li>
+<li>replacing Gyro with Gyroscope</li>
+<li>replacing Mag with Magnitude</li>
+<li>replacing the string BodyBody with Body (I noticed that a few names had the word Body repeating)</li>
+<li>replacing the string mean with Mean</li>
+<li>replacing the string std with StandardDeviation</li>
+</ol>
 
 Here is a couple befroe and after variable names
 fBodyBodyGyroJerkMag-std() -> FrequencyBodyGyroscopeJerkMagnitudeStandardDeviation
@@ -155,10 +159,9 @@ and then using read_table2 to create a data frame
 ## add id and activity column names
     names(activity_labels) <- c("id","activity")
 
-## add labels column name along with the activity column names, they will be used later 
-## to match activity id to activity description
-   names(test_labels)<- "id"
-   names(training_labels)<- "id"
+## add labels column name along with the activity column names, they will be used later to match activity id to activity description
+    names(test_labels)<- "id"
+    names(training_labels)<- "id"
 
 ##        
 ## Extract from the variable columns only those that have the string -mean( or -std( in their names
@@ -219,10 +222,10 @@ and then using read_table2 to create a data frame
     setkeyv(summary_table,keycols)
 
 ## calculate the mean of variables by activity and subject
-   summary_table <-summary_table[,lapply(.SD,mean),by=key(summary_table)]
+    summary_table <-summary_table[,lapply(.SD,mean),by=key(summary_table)]
 
 ## save the summary table to a csv file
-   write.table(summary_table,file = "SummaryTable.txt",row.names = FALSE)
+    write.table(summary_table,file = "SummaryTable.txt",row.names = FALSE)
 
 
 ##
