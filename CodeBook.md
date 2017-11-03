@@ -61,6 +61,10 @@ I created a data.table called summary table and added "activity" and "subject" a
     6:   LAYING       6                  0.2486565                -0.01025292                 -0.1331196
 
 ##
+##  Code
+##
+
+##
 ## Download the data file
 ##
         
